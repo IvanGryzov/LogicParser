@@ -1,6 +1,12 @@
 fr=[]
 pos=0
 
+def ImpOp():
+    pass
+
+def AndOp():
+    pass
+
 def OrOp():
     pass
 

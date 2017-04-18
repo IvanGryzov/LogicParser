@@ -24,7 +24,6 @@ def OrOp():
         res = res or res2
     return res
 
-
 def AndOp():
     global pos, fr
     res = NotOp()

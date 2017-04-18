@@ -36,6 +36,7 @@ def AndOp():
 
 def NotOp():
     global pos,fr
+
     if fr[pos] in "ABCDEFGH":
         pos+=1
         return False

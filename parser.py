@@ -2,17 +2,42 @@ fr=[]
 pos=0
 
 def ImpOp():
-    pass
-
-def AndOp():
-    pass
+    global pos, fr
+    res = OrOp()
+    while fr[pos] in ['imp','equ']:
+        op = fr[pos]
+        pos+=1
+        res2 = OrOp()
+        if op=='imp':
+            res = res or res2
+        elif op=='equ':
+            res = res or res2
+    return res
 
 def OrOp():
-    pass
+    global pos, fr
+    res = AndOp()
+    while fr[pos] == 'or':
+        op = fr[pos]
+        pos += 1
+        res2 = AndOp()
+        res = res or res2
+    return res
+
+def AndOp():
+    global pos, fr
+    res = NotOp()
+    while fr[pos] == 'and':
+        op = fr[pos]
+        pos += 1
+        res2 = NotOp()
+        res = res and res2
+    return res
 
 def NotOp():
     global pos,fr
     if fr[pos] in "ABCDEFGH":
+        pos+=1
         return False
     elif fr[pos]=='(':
         pos+=1
@@ -32,9 +57,9 @@ def Parser(s):
     fr = s.split()
     print(fr)
     pos=0
-    print(NotOp())
+    print(ImpOp())
 
-Parser('not C')
+Parser('A or not C')
 print(fr)
 """
 var s: string; {исходное выражение}

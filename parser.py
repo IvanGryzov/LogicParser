@@ -1,12 +1,16 @@
 fr=[]
 pos=0
 var={}
+bool=[False,True]
 
 def imp(a,b):
     return not(a)or b
 
 def equ(a,b):
     return a and b or not(a) and not(b)
+
+def xor(a,b):
+    return a and not(b) or not(a)and b
 
 def getPos():
     global pos,fr
@@ -31,11 +35,14 @@ def ImpOp():
 def OrOp():
     global pos, fr
     res = AndOp()
-    while getPos() == 'or':
+    while getPos() in ['or','xor']:
         op = getPos()
         pos += 1
         res2 = AndOp()
-        res = res or res2
+        if op == 'or':
+            res = res or res2
+        elif op == 'xor':
+            res = xor(res,res2)
     return res
 
 def AndOp():
@@ -63,6 +70,19 @@ def NotOp():
         pos+=1
         return not NotOp()
 
+def All(n):
+    global fr, var, pos,bool
+    if n>=len(var):
+        pos = 0
+        for x in var:
+            print(var[x], end="\t")
+        print(ImpOp())
+    else:
+        for x in bool:
+            var[list(var.keys())[n]] = x
+            All(n+1)
+
+
 def Parser(s):
     """
     
@@ -71,17 +91,19 @@ def Parser(s):
     """
     global fr,var,pos
     fr = s.split()
+    for x in fr:
+        if x in 'ABCDEFGH':
+            var[x]=False
     print(fr)
-    bool=[False,True]
-    for x in bool:
-        for y in bool:
-            pos=0
-            var['A'] = x
-            var['C'] = y
-            print(x,y,ImpOp())
+    print(var)
+
+    for x in var:
+        print(x)
+    All(0)
+
 
 
 
 var={'A':True,'C':True}
-Parser('A or not C')
+Parser('A and B or C')
 

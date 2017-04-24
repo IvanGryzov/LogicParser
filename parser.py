@@ -58,7 +58,7 @@ def AndOp():
 def NotOp():
     global pos,fr,var
     literal=getPos()
-    if len(literal)>0 and literal in "ABCDEFGH":
+    if len(literal)>0 and literal in "ABCDEFGHIKLMNOPQRSTVXYZ":
         pos+=1
         #print("---",literal)
         return var[literal]
@@ -74,12 +74,12 @@ def All(n):
     global fr, var, pos,bool
     if n>=len(var):
         pos = 0
-        for x in var:
+        for x in sorted(var):
             print(var[x], end="\t")
         print(ImpOp())
     else:
         for x in bool:
-            var[list(var.keys())[n]] = x
+            var[sorted(list(var.keys()))[n]] = x
             All(n+1)
 
 
@@ -92,18 +92,18 @@ def Parser(s):
     global fr,var,pos
     fr = s.split()
     for x in fr:
-        if x in 'ABCDEFGH':
+        if x in 'ABCDEFGHIKLMNOPQRSTVXYZ':
             var[x]=False
     print(fr)
-    print(var)
 
-    for x in var:
-        print(x)
+    for x in sorted(var):
+        print(x,end="\t\t")
+    print("F")
     All(0)
 
 
 
 
 var={'A':True,'C':True}
-Parser('A and B or C')
+Parser('A and B or not C')
 

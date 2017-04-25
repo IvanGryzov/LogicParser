@@ -64,8 +64,9 @@ def NotOp():
         return var[literal]
     elif literal=='(':
         pos+=1
-        return OrOp()
+        res = ImpOp()
         pos+=1
+        return res
     elif literal=='not':
         pos+=1
         return not NotOp()
@@ -90,7 +91,13 @@ def Parser(s):
     :return: значение
     """
     global fr,var,pos
+    lit=['(',')','xor','or','and','imp','equ','not']
+    for x in lit:
+        s=s.replace(x,' '+x+' ')
+
+    print(s)
     fr = s.split()
+
     for x in fr:
         if x in 'ABCDEFGHIKLMNOPQRSTVXYZ':
             var[x]=False
@@ -102,8 +109,5 @@ def Parser(s):
     All(0)
 
 
-
-
-var={'A':True,'C':True}
-Parser('A and B or not C')
+Parser('(A imp B ) or ( not A imp not B )')
 

@@ -94,10 +94,8 @@ def Parser(s):
     lit=['(',')','xor','or','and','imp','equ','not']
     for x in lit:
         s=s.replace(x,' '+x+' ')
-
     print(s)
     fr = s.split()
-
     for x in fr:
         if x in 'ABCDEFGHIKLMNOPQRSTVXYZ':
             var[x]=False
@@ -109,5 +107,5 @@ def Parser(s):
     All(0)
 
 
-Parser('(A imp B ) or ( not A imp not B )')
-
+#Parser('(A imp B ) or ( not A imp not B )')
+Parser('( A and B and C )')
